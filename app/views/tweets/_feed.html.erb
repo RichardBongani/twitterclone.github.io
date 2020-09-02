@@ -1,0 +1,54 @@
+<div class="column is-half">
+<%= render 'tweets/error' %>
+    <% if user_signed_in? %>
+    <article class="media box">
+        <figure class="media-left">
+            <p class="image is-64x64">
+            <%= gravatar_image_tag(current_user.email, size: 64, alt: current_user.name, class:'phot_img') %>
+            </p>
+        </figure>
+        <div class="media-content">
+            <%= render 'tweets/form' %>
+      </div>
+    </article>
+    <% end %>
+
+<% @tweets.each do |twet| %>
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                <%= gravatar_image_tag(twet.user.email, size: 64, alt: twet.user.name, class:'phot_img') %>
+                </figure>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <strong><%= twet.user.name%></strong></br>
+                    <small><%= twet.user.username%></small></br>
+                    <p><%= twet.tweet %></p>
+                </div>
+
+                <% if user_signed_in? %>
+                <footer class="card-footer mt-4">
+
+                <%= link_to twet do %>
+                    <i class="card-footer-item fa fa-link"></i>
+                <% end %>
+
+                <%= link_to edit_tweet_path(twet) do %>
+                    <i class="card-footer-item fa fa-pencil"></i>
+                <% end %>
+
+                <%= link_to twet, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="card-footer-item fa fa-trash-o"></i>
+                <% end %>
+              </footer>
+              <% end %>
+            </div>
+           
+        </article>
+        
+        </div>
+
+<% end %>
+</div>
